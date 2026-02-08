@@ -2,7 +2,7 @@ name: Daily Exchange Rates Update
 
 on:
   schedule:
-    - cron: '54 6 * * *'
+    - cron: '01 7 * * *'
   workflow_dispatch:
 
 jobs:
