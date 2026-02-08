@@ -1,0 +1,45 @@
+name: Daily Exchange Rates Update
+
+on:
+  schedule:
+    # 한국 시간 아침 09:00 = UTC 00:00
+    - cron: '0 0 * * *'
+  workflow_dispatch: # 수동 실행 버튼 추가
+
+permissions:
+  contents: write
+
+jobs:
+  fetch-and-save:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 저장소 체크아웃
+        uses: actions/checkout@v3
+
+      - name: Python 설정
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: 라이브러리 설치
+        run: |
+          pip install requests pandas python-dotenv
+
+      - name: 환율 스크립트 실행
+        env:
+          EXCHANGE_KEY: ${{ secrets.EXCHANGE_KEY }}
+        run: |
+          python fetch_rates.py
+
+      - name: 변경 사항 커밋 및 푸시
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # data 폴더의 파일을 스테이징
+          git add data/exchange_rates.csv
+          
+          # 변경사항이 있을 때만 커밋
+          git commit -m "Update exchange rates [$(date)]" || exit 0
+          git push
