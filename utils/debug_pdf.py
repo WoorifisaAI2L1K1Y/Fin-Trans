@@ -1,8 +1,10 @@
 import pdfplumber
 import re
+import os
 
-PDF_FILE_PATH = "economic_terms.pdf"
-OUTPUT_FILE = "final_verification_strict.txt"
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PDF_FILE_PATH = os.path.join(BASE_DIR, "data", "economic_terms.pdf")
+OUTPUT_FILE = os.path.join(BASE_DIR, "data", "final_verification_strict.txt")
 
 # 페이지 설정
 INDEX_START_PAGE = 5   

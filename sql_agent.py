@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from langchain_community.utilities import SQLDatabase
 from langchain.chains import create_sql_query_chain
-from langchain_community.tools.sql_database.tool import QuerySQLDataBaseTool
+from langchain_community.tools import QuerySQLDatabaseTool
 from operator import itemgetter
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import PromptTemplate
@@ -41,7 +41,7 @@ def clean_sql_query(text: str) -> str:
 
 # 4. Text-to-SQL 체인 생성
 generate_query = create_sql_query_chain(llm, db)
-execute_query = QuerySQLDataBaseTool(db=db)
+execute_query = QuerySQLDatabaseTool(db=db)
 
 # 최종 답변 프롬프트
 answer_prompt = PromptTemplate.from_template(
