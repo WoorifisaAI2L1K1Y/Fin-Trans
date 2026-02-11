@@ -1,12 +1,9 @@
-<<<<<<< HEAD
 .env
 .venv/
+venv/
+env/
 __pycache__/
 /utils/__pycache__/
-=======
-fintrans/
-.env
-__pycache__/
 *.txt
 !requirements.txt
->>>>>>> fin-rag
+*.pyc
