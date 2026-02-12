@@ -4,8 +4,11 @@ import pymysql
 import os
 import bcrypt
 from dotenv import load_dotenv
+
 from utils.handle_sql import get_data, execute_query
 from rag_agent.main_agent import run_fintech_agent
+from streamlit_mic_recorder import mic_recorder
+from whisper.mic_prompt import transcribe_audio_bytes
 
 load_dotenv()
 
@@ -87,7 +90,9 @@ if 'messages' not in st.session_state:
     st.session_state['messages'] = [{"role": "assistant", "content": "안녕하세요! **우리 A.I 에이전트**입니다. 🦋"}]
 if 'chat_sessions' not in st.session_state:
     st.session_state['chat_sessions'] = []
-
+if 'user_input_text' not in st.session_state:
+    st.session_state['user_input_text'] = ""
+    
 # ==========================================
 # 3. 페이지 함수
 # ==========================================
